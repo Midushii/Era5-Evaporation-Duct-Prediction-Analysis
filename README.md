@@ -265,19 +265,18 @@ Era5-Evaporation-Duct-Prediction-Analysis/
 ```
 
 ---
+13. Python Pipeline
 
-## 13. Python Pipeline
+All scripts live in 02_Python_Codes/, organised by stage:
 
-All scripts live in `02_Python_Codes/`, organised by stage:
+Data acquisition and preparation
 
-**Data acquisition and preparation**
-
+```
 A_era5_download_1990_2025.py     ERA5 CDS API retrieval
 B_MASTER_CSV.py                   Consolidated monthly-mean master table
-
-
-**Statistical analysis**
-
+```
+Statistical analysis
+```
 C_Pettitt_Test.py
 C_SNHT_Test.py
 C_Buishand_Range_Test.py
@@ -285,35 +284,30 @@ C_Breakpoint_Test.py
 C_Mann_Kendall_Test.py
 C_Detrending.py
 C_Combined_Statistical_Tests.py    Full 65-series battery in a single run
-
-
-**Temporal classification**
-
+```
+Temporal classification
+```
 D_Time_Band_Classification.py     UTC → IST conversion, 4 diurnal bands
-
-
-**Evaporation duct computation**
-
+```
+Evaporation duct computation
+```
 E_Evaporation_Duct_Height_Computation.py
    Surface-layer reconstruction, refractivity, modified refractivity,
    duct height extraction with boundary-hit quality control
-
-
-**Distribution and climatology**
-
+```
+Distribution and climatology
+```
 F_Histogram_Per_Month.py
 F_Histogram_Per_Year.py
 F_Summary_Bar_ALL_Year.py
 F_Summary_Bar_All_Months.py
-
-
-**Duct-profile visualisation**
-
+```
+Duct-profile visualisation
+```
 G_Duct_Profile_Per_Month.py
 G_Duct_Profile_Per_Year.py
 G_Duct_Profile_ALL_Months.py
----
-
+```
 ## 14. Main Outputs
 
 **Statistical outputs** — homogeneity-test results, breakpoint locations, detrended re-test results, p-value summaries, trend statistics, historical comparison plots.
