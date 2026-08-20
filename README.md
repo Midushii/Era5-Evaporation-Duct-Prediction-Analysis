@@ -40,8 +40,7 @@ The region is relevant to marine electromagnetic propagation because the lower a
 
 ## 3. Methodology Overview
 
-```text
-## 3. Methodology
+
 
 The analysis follows a sequential workflow, beginning with the historical ERA5 record and ending with the reconstruction and climatological analysis of evaporation duct height.
 
@@ -66,9 +65,7 @@ The near-surface minimum in the modified-refractivity profile is identified as t
 **7. Climatological analysis**  
 The resulting duct-height series is analysed across monthly, diurnal, and annual timescales, together with probability distributions and cumulative distributions.
 
-```
 
----
 
 ## 4. ERA5 Input Data
 
@@ -151,8 +148,6 @@ where z is height above the surface in metres. The vertical gradient of M(z) gov
 
 ## 8. Evaporation Duct Height
 
-```
-
 The final objective of the atmospheric reconstruction is to translate the continuous vertical thermodynamic structure of the marine surface layer into a physically meaningful evaporation duct height.
 
 The reconstructed temperature and humidity profiles are first used to calculate radio refractivity, `N(z)`. This is then expressed as modified refractivity to account for the curvature of the Earth:
@@ -185,7 +180,7 @@ The figure below shows the **January climatological modified-refractivity profil
 *January climatological modified-refractivity profile for 1980–2025. The vertical structure of M(z) provides the physical basis for determining the corresponding evaporation duct height.*
 
 This profile-based approach keeps the estimated duct height directly connected to the underlying atmospheric state. Rather than treating duct height as an independent statistical prediction, the value emerges from the reconstructed temperature and humidity structure and its resulting refractive properties.
-```
+
 ## 9. Quality Control
 
 A minimum found within the **top 10% of the reconstructed 80 m profile**, or exactly at the surface, is not assigned a numerical duct height. In these cases the true refractivity minimum likely lies outside the resolvable range — most commonly under strongly stable, low-wind conditions where the trapping layer extends beyond what a bounded surface-layer reconstruction can resolve.
