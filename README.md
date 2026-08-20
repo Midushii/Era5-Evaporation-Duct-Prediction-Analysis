@@ -425,6 +425,8 @@ If this repository or its methodology is used in subsequent research, please cit
 
 ### License
 
-This repository is currently being prepared for public research release. Licensing information will be provided with the release.
+This project is licensed under the MIT License. You are free to use, modify, and distribute the code, subject to the terms of the license.
+
+See the LICENSE file for the full license text.
 
 For further information, please contact [midushi.maheswari@gmail.com]
