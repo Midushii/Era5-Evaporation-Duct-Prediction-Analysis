@@ -1,4 +1,4 @@
-# ERA5 Evaporation Duct Height Reconstruction and Analysis — Mumbai Coastal Region
+# ERA5 Evaporation Duct Height Reconstruction and Analysis for the Mumbai Coastal Region
 
 A physics-based pipeline for reconstructing the marine atmospheric surface layer from ERA5 reanalysis data and estimating evaporation duct height and its influence on low-altitude electromagnetic wave propagation over the Arabian Sea.
 
@@ -41,40 +41,31 @@ The region is relevant to marine electromagnetic propagation because the lower a
 ## 3. Methodology Overview
 
 ```text
-ERA5 Hourly Reanalysis
-        │
-        ▼
-Surface Meteorological Variables
-        │
-        ▼
-Quality Control and Temporal Aggregation
-        │
-        ▼
-Historical Statistical Analysis (homogeneity testing)
-        │
-        ▼
-Study-Period Selection
-        │
-        ▼
-Marine Surface-Layer Reconstruction (Paulus–Jeske / Monin–Obukhov)
-        │
-        ▼
-Temperature and Humidity Profiles (0.05 m – 80 m)
-        │
-        ▼
-Radio Refractivity N(z) — ITU-R P.453
-        │
-        ▼
-Modified Refractivity M(z)
-        │
-        ▼
-Evaporation Duct Height (height of M-minimum, with QC)
-        │
-        ▼
-Seasonal / Diurnal / Annual Climatology
-        │
-        ▼
-Distribution and Statistical Analysis
+## 3. Methodology
+
+The analysis follows a sequential workflow, beginning with the historical ERA5 record and ending with the reconstruction and climatological analysis of evaporation duct height.
+
+**1. ERA5 data preparation**  
+Hourly surface meteorological variables are extracted and organised for the Mumbai coastal Arabian Sea domain.
+
+**2. Historical statistical assessment**  
+The 1940–2025 record is examined using multiple homogeneity, trend, and breakpoint tests, followed by detrending and re-testing.
+
+**3. Study-period selection**  
+The statistical results and data completeness are used to establish 1980–2025 as the principal climatological study period.
+
+**4. Surface-layer reconstruction**  
+The Paulus–Jeske bulk formulation and Monin–Obukhov similarity theory are used to reconstruct the near-surface temperature and humidity profiles from 0.05 m to 80 m.
+
+**5. Refractivity calculation**  
+The reconstructed atmospheric profiles are converted to radio refractivity and modified refractivity using the ITU-R P.453 formulation.
+
+**6. Evaporation duct identification**  
+The near-surface minimum in the modified-refractivity profile is identified as the evaporation duct height, subject to boundary-based quality control.
+
+**7. Climatological analysis**  
+The resulting duct-height series is analysed across monthly, diurnal, and annual timescales, together with probability distributions and cumulative distributions.
+
 ```
 
 ---
@@ -160,40 +151,53 @@ where z is height above the surface in metres. The vertical gradient of M(z) gov
 
 ## 8. Evaporation Duct Height
 
-The evaporation duct height is defined as the height of the near-surface minimum of the M(z) profile:
-
-```
-Modified
-Refractivity
-     │
-     │\
-     │ \
-     │  \
-     │   \
-     │    \____
-     │         \
-     │          \
-     └────────────────── Height
-               ↑
-        Duct-height minimum
 ```
 
-Below this height, M decreases with height (the trapping layer); above it, M increases, corresponding to normal atmospheric refraction.
+The final objective of the atmospheric reconstruction is to translate the continuous vertical thermodynamic structure of the marine surface layer into a physically meaningful evaporation duct height.
 
----
+The reconstructed temperature and humidity profiles are first used to calculate radio refractivity, `N(z)`. This is then expressed as modified refractivity to account for the curvature of the Earth:
 
+`M(z) = N(z) + 0.157z`
+
+where `z` is height above the sea surface in metres.
+
+The resulting `M(z)` profile provides the basis for identifying the evaporation duct. When modified refractivity decreases with height near the sea surface, electromagnetic waves are refracted downward, creating conditions in which radio energy can become trapped within the lower atmosphere. As height increases, the profile eventually reaches a minimum before transitioning to an increasing gradient.
+
+The height of this minimum is used to determine the evaporation duct height.
+
+### Interpreting the Modified-Refractivity Profile
+
+For a resolved evaporation duct, the profile can be understood in three parts:
+
+1. **Near-surface trapping layer**  
+   Modified refractivity decreases with height, producing the refractive conditions required for electromagnetic trapping.
+
+2. **Duct-height minimum**  
+   `M(z)` reaches its minimum and the vertical gradient changes sign. This point defines the reconstructed evaporation duct height.
+
+3. **Atmosphere above the duct**  
+   Modified refractivity increases with height, indicating that the strong trapping condition has weakened above the duct.
+
+The figure below shows the **January climatological modified-refractivity profile for 1980–2025**, generated directly from the reconstructed atmospheric profiles in this study. It represents the average vertical refractive structure of the marine surface layer for January across the complete study period.
+
+![January 1980–2025 modified-refractivity climatological profile](05_Duct_Profiles/Duct_Profiles_1980-2025/profile_climatology_01.png)
+
+*January climatological modified-refractivity profile for 1980–2025. The vertical structure of M(z) provides the physical basis for determining the corresponding evaporation duct height.*
+
+This profile-based approach keeps the estimated duct height directly connected to the underlying atmospheric state. Rather than treating duct height as an independent statistical prediction, the value emerges from the reconstructed temperature and humidity structure and its resulting refractive properties.
+```
 ## 9. Quality Control
 
 A minimum found within the **top 10% of the reconstructed 80 m profile**, or exactly at the surface, is not assigned a numerical duct height. In these cases the true refractivity minimum likely lies outside the resolvable range — most commonly under strongly stable, low-wind conditions where the trapping layer extends beyond what a bounded surface-layer reconstruction can resolve.
 
 ```
-Resolved evaporation duct
-              │
-              └── Reliable minimum within the resolved domain
+Not every reconstructed profile provides enough information to assign a reliable duct height. The detected minimum is therefore evaluated against the vertical range over which the profile is resolved.
 
-Unresolved profile
-              │
-              └── Minimum potentially outside the resolved domain
+A profile is classified as **resolved** when a physically meaningful minimum occurs within the resolved height range. In this case, the detected minimum can be used confidently as the evaporation duct height.
+
+When the profile does not contain a reliable interior minimum, the result is classified as **unresolved**. This can occur when the profile continues to decrease up to the upper boundary of the model domain, indicating that the actual minimum may lie above the resolved range. Such cases are not assigned an artificial duct height and are instead retained as unresolved observations.
+
+This distinction prevents boundary-limited profiles from being interpreted as physically resolved ducts and provides an explicit quality-control step between profile reconstruction and the final climatological analysis.
 ```
 
 Such hours are recorded as unresolved (NaN) rather than assigned a forced, non-physical value — preventing the climatological statistics from being biased by boundary artefacts. The 80 m ceiling itself is set from published Arabian Sea field measurements reporting stable-condition duct heights up to ~74 m, giving margin above the physically observed maximum. Across the full dataset, roughly 0.15–0.2% of hours are flagged unresolved by this criterion.
@@ -354,27 +358,17 @@ These comparisons are physical consistency checks, not a substitute for direct o
 ## 17. Reproducibility
 
 ```
-1. Obtain ERA5 hourly data
-              ↓
-2. Prepare the master analysis tables
-              ↓
-3. Run historical statistical tests
-              ↓
-4. Perform detrending and breakpoint analysis
-              ↓
-5. Establish the analysis period
-              ↓
-6. Classify observations by time band (IST)
-              ↓
-7. Reconstruct the marine surface layer
-              ↓
-8. Calculate atmospheric refractivity
-              ↓
-9. Determine evaporation duct height
-              ↓
-10. Generate climatological statistics
-              ↓
-11. Generate profiles, distributions and summaries
+1. ERA5 hourly data acquisition
+2. Master-table preparation
+3. Historical statistical assessment
+4. Detrending and breakpoint analysis
+5. Study-period selection
+6. IST-based time-band classification
+7. Marine surface-layer reconstruction
+8. Atmospheric refractivity calculation
+9. Evaporation duct-height determination
+10. Climatological analysis
+11. Profile, distribution, and summary generation
 ```
 
 The corresponding implementation for every stage is in `02_Python_Codes/`.
@@ -437,8 +431,8 @@ This project establishes a reproducible atmospheric and statistical framework fo
 
 ## 23. Author
 
-**Midushi Maheshwari**
-Undergraduate research project, developed during a DRDO internship.
+**Midushi Maheshwari**  
+B.Tech. Electronics and Communication Engineering with Specialization in AI | IGDTUW |  Undergraduate Research Project 
 
 ### Citation
 
@@ -446,4 +440,6 @@ If this repository or its methodology is used in subsequent research, please cit
 
 ### License
 
-License information will be added as the project is prepared for public research release.
+This repository is currently being prepared for public research release. Licensing information will be provided with the release.
+
+For further information, please contact [midushi.maheswari@gmail.com]
