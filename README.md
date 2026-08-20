@@ -185,7 +185,6 @@ This profile-based approach keeps the estimated duct height directly connected t
 
 A minimum found within the **top 10% of the reconstructed 80 m profile**, or exactly at the surface, is not assigned a numerical duct height. In these cases the true refractivity minimum likely lies outside the resolvable range — most commonly under strongly stable, low-wind conditions where the trapping layer extends beyond what a bounded surface-layer reconstruction can resolve.
 
-```
 Not every reconstructed profile provides enough information to assign a reliable duct height. The detected minimum is therefore evaluated against the vertical range over which the profile is resolved.
 
 A profile is classified as **resolved** when a physically meaningful minimum occurs within the resolved height range. In this case, the detected minimum can be used confidently as the evaporation duct height.
@@ -193,7 +192,6 @@ A profile is classified as **resolved** when a physically meaningful minimum occ
 When the profile does not contain a reliable interior minimum, the result is classified as **unresolved**. This can occur when the profile continues to decrease up to the upper boundary of the model domain, indicating that the actual minimum may lie above the resolved range. Such cases are not assigned an artificial duct height and are instead retained as unresolved observations.
 
 This distinction prevents boundary-limited profiles from being interpreted as physically resolved ducts and provides an explicit quality-control step between profile reconstruction and the final climatological analysis.
-```
 
 Such hours are recorded as unresolved (NaN) rather than assigned a forced, non-physical value — preventing the climatological statistics from being biased by boundary artefacts. The 80 m ceiling itself is set from published Arabian Sea field measurements reporting stable-condition duct heights up to ~74 m, giving margin above the physically observed maximum. Across the full dataset, roughly 0.15–0.2% of hours are flagged unresolved by this criterion.
 
@@ -273,13 +271,13 @@ Era5-Evaporation-Duct-Prediction-Analysis/
 All scripts live in `02_Python_Codes/`, organised by stage:
 
 **Data acquisition and preparation**
-```
+
 A_era5_download_1990_2025.py     ERA5 CDS API retrieval
 B_MASTER_CSV.py                   Consolidated monthly-mean master table
-```
+
 
 **Statistical analysis**
-```
+
 C_Pettitt_Test.py
 C_SNHT_Test.py
 C_Buishand_Range_Test.py
@@ -287,35 +285,33 @@ C_Breakpoint_Test.py
 C_Mann_Kendall_Test.py
 C_Detrending.py
 C_Combined_Statistical_Tests.py    Full 65-series battery in a single run
-```
+
 
 **Temporal classification**
-```
+
 D_Time_Band_Classification.py     UTC → IST conversion, 4 diurnal bands
-```
+
 
 **Evaporation duct computation**
-```
+
 E_Evaporation_Duct_Height_Computation.py
    Surface-layer reconstruction, refractivity, modified refractivity,
    duct height extraction with boundary-hit quality control
-```
+
 
 **Distribution and climatology**
-```
+
 F_Histogram_Per_Month.py
 F_Histogram_Per_Year.py
 F_Summary_Bar_ALL_Year.py
 F_Summary_Bar_All_Months.py
-```
+
 
 **Duct-profile visualisation**
-```
+
 G_Duct_Profile_Per_Month.py
 G_Duct_Profile_Per_Year.py
 G_Duct_Profile_ALL_Months.py
-```
-
 ---
 
 ## 14. Main Outputs
